@@ -10,10 +10,21 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 namespace TaskManagementAPI.Filter
 {
+    /// <summary>
+    /// Auth filter
+    /// </summary>
+    /// <seealso cref="System.Web.Http.AuthorizeAttribute" />
     public class JwtAuthorizeAttribute : AuthorizeAttribute
     {
         private readonly string _jwtSecret = ConfigurationManager.AppSettings["JwtSecretkey"];
 
+        /// <summary>
+        /// Indicates whether the specified control is authorized.
+        /// </summary>
+        /// <param name="actionContext">The context.</param>
+        /// <returns>
+        /// true if the control is authorized; otherwise, false.
+        /// </returns>
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             var authorizationHeader = actionContext.Request.Headers.Authorization;
@@ -37,6 +48,11 @@ namespace TaskManagementAPI.Filter
             return false;
         }
 
+        /// <summary>
+        /// Validates the token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         private bool ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -58,6 +74,11 @@ namespace TaskManagementAPI.Filter
             return true;
         }
 
+        /// <summary>
+        /// Gets the principal.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         private ClaimsPrincipal GetPrincipal(string token)
         {
             try

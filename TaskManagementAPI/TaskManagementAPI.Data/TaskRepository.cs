@@ -8,12 +8,17 @@ using TaskManagementAPI.Data.Dto;
 
 namespace TaskManagementAPI.Data
 {
-    /// <summary>
-    /// Get/Save Task data to Database
-    /// </summary>
+    /// <summary>Get/Save Task data to Database</summary>
     public class TaskRepository
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["TaskManagementDB"].ConnectionString;
+
+        #region Public async methods 
+        /// <summary>Gets the tasks asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        ///  list of tasks 
+        /// </returns>
         public async Task<List<TaskDto>> GetTasksAsync(int userId)
         {
             var tasks = new List<TaskDto>();
@@ -37,14 +42,20 @@ namespace TaskManagementAPI.Data
                             TaskName = reader["TaskName"].ToString(),
                             AssignTo = reader["AssignTo"].ToString(),
                             StatusName = reader["StatusName"].ToString(),
-                            TaskDescription = reader["TaskDescription"].ToString() 
+                            TaskDescription = reader["TaskDescription"].ToString()
                         });
                     }
                 }
             }
-            return  tasks;
+            return tasks;
         }
 
+        /// <summary>Gets the task asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="taskId">The task identifier.</param>
+        /// <returns>
+        ///   task
+        /// </returns>
         public async Task<TaskDto> GetTaskAsync(int userId, int taskId)
         {
 
@@ -76,7 +87,13 @@ namespace TaskManagementAPI.Data
             }
             return task;
         }
-    
+
+        /// <summary>Adds the task asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="taskName">Name of the task.</param>
+        /// <param name="taskDescription">The task description.</param>
+        /// <param name="statusId">The status identifier.</param>
+        /// <param name="createdById">The created by identifier.</param>
         public async Task AddTaskAsync(int userId, string taskName, string taskDescription, int statusId, int createdById)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -96,6 +113,13 @@ namespace TaskManagementAPI.Data
             }
         }
 
+        /// <summary>Updates the task asynchronous.</summary>
+        /// <param name="taskId">The task identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="taskName">Name of the task.</param>
+        /// <param name="taskDescription">The task description.</param>
+        /// <param name="statusId">The status identifier.</param>
+        /// <param name="lastUpdatedByUserId">The last updated by user identifier.</param>
         public async Task UpdateTaskAsync(int taskId, int userId, string taskName, string taskDescription, int statusId, int lastUpdatedByUserId)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -116,6 +140,9 @@ namespace TaskManagementAPI.Data
             }
         }
 
+        /// <summary>Deletes the task asynchronous.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="taskId">The task identifier.</param>
         public async Task DeleteTaskAsync(int userId, int taskId)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -128,10 +155,14 @@ namespace TaskManagementAPI.Data
                 cmd.Parameters.AddWithValue("@TaskId", taskId);
 
                 conn.Open();
-               await cmd.ExecuteNonQueryAsync();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
+        /// <summary>Gets the task count by user asynchronous.</summary>
+        /// <returns>
+        ///  Task count for users
+        /// </returns>
         public async Task<List<TaskCountDto>> GetTaskCountByUserAsync()
         {
             var tasksCount = new List<TaskCountDto>();
@@ -150,7 +181,7 @@ namespace TaskManagementAPI.Data
                         {
                             FullName = reader["FullName"].ToString(),
                             TaskCount = (int)reader["TaskCount"]
-                         
+
                         });
                     }
                 }
@@ -158,6 +189,10 @@ namespace TaskManagementAPI.Data
             return tasksCount;
         }
 
+        /// <summary>Gets all task status asynchronous.</summary>
+        /// <returns>
+        ///   List of task status
+        /// </returns>
         public async Task<List<TaskStatusDto>> GetAllTaskStatusAsync()
         {
             var tasksStatus = new List<TaskStatusDto>();
@@ -182,5 +217,7 @@ namespace TaskManagementAPI.Data
             }
             return tasksStatus;
         }
+
+        #endregion
     }
 }

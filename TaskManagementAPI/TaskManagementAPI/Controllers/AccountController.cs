@@ -15,6 +15,10 @@ using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Controllers
 {
+    /// <summary>
+    /// Account controller Actions with User data
+    /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/account")]
     public class AccountController : ApiController
@@ -23,11 +27,21 @@ namespace TaskManagementAPI.Controllers
         private readonly string _jwtSecret = ConfigurationManager.AppSettings["JwtSecretkey"];
         private readonly int _jwtLifespan = Convert.ToInt16(ConfigurationManager.AppSettings["JwtTokenLifeInMinitue"]);
 
+        #region Action Methods
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
         public AccountController()
         {
             _userRepository = new UserRepository();
         }
 
+        /// <summary>
+        /// Logins the specified login.
+        /// </summary>
+        /// <param name="login">The login.</param>
+        /// <returns></returns>
+        /// <exception cref="login">Login Model cannot be null</exception>
         [HttpPost, Route("login")]
         public async Task<IHttpActionResult> Login(LoginModel login)
         {
@@ -51,6 +65,10 @@ namespace TaskManagementAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Getalls the task status.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("getallusers")]
         public async Task<IHttpActionResult> GetallTaskStatus()
         {
@@ -68,6 +86,14 @@ namespace TaskManagementAPI.Controllers
             }
 
         }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Generates the JWT token.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         private string GenerateJwtToken(UserDto user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -85,6 +111,7 @@ namespace TaskManagementAPI.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+        #endregion
 
     }
 }

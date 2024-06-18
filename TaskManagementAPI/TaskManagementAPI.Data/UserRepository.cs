@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,13 +7,19 @@ using TaskManagementAPI.Data.Dto;
 
 namespace TaskManagementAPI.Data
 {
-        /// <summary>
-    /// Get or save user data to database
-    /// </summary>
+    /// <summary>Get or save user data to database</summary>
     public class UserRepository
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["TaskManagementDB"].ConnectionString;
 
+        #region public async methods 
+
+        /// <summary>Authenticates the user asynchronous.</summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        ///  authenticated user
+        /// </returns>
         public async Task<UserDto> AuthenticateUserAsync(string userName, string password)
         {
             UserDto user = null;
@@ -43,6 +48,10 @@ namespace TaskManagementAPI.Data
                 return user;
             }
         }
+        /// <summary>Gets all users asynchronous.</summary>
+        /// <returns>
+        ///   Users object
+        /// </returns>
         public async Task<List<UserDto>> GetAllUsersAsync()
         {
             var users = new List<UserDto>();
@@ -67,6 +76,8 @@ namespace TaskManagementAPI.Data
             }
             return users;
         }
+
+        #endregion
     }
 
 }
