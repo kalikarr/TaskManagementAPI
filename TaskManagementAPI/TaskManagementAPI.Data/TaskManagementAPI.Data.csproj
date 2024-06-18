@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Dto\TaskCountDto.cs" />
     <Compile Include="Dto\TaskDto.cs" />
-    <Compile Include="Dto\TaskStatus.cs" />
+    <Compile Include="Dto\TaskStatusDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="TaskRepository.cs" />
     <Compile Include="UserRepository.cs" />
