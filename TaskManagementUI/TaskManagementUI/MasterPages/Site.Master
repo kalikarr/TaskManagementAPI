@@ -42,14 +42,14 @@
         </header>
         <div class="container">
             <div id="successMessage" class="alert alert-success alert-dismissible fade show message-popup position-fixed form-row container" role="alert" style="display: none;">
-                <strong>Success!</strong> <span id="successText"></span>
+                <strong>Success!&nbsp&nbsp</strong> <span id="successText"></span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div id="errorMessage" class="alert alert-danger alert-dismissible fade show message-popup position-fixed form-row container" role="alert" style="display: none;">
-                <strong>Error!</strong> <span id="errorText"></span>
+                <strong>Error!&nbsp&nbsp</strong> <span id="errorText"></span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
