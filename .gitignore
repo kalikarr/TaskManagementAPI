@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/TaskManagementUI/TaskManagementUI/bin
+/TaskManagementUI/.vs/TaskManagementUI
+/TaskManagementUI/packages
+/TaskManagementUI/TaskManagementUI/obj/Debug
+/TaskManagementAPI/TaskManagementAPI.Data/bin/Debug
+/TaskManagementAPI/TaskManagementAPI.Data/obj/Debug
+/TaskManagementAPI/TaskManagementAPI/bin
+/TaskManagementAPI/TaskManagementAPI/obj/Debug
+/TaskManagementAPI/packages
+/TaskManagementAPI/.vs/TaskManagementAPI/config
+/TaskManagementAPI/.vs/TaskManagementAPI/FileContentIndex
+/TaskManagementAPI/.vs/TaskManagementAPI/v17/.suo
+/TaskManagementAPI/.vs/TaskManagementAPI/v17/DocumentLayout.json
