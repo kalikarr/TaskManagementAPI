@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using TaskManagementUI.Dto;
 using TaskManagementUI.Helpers;
 
@@ -20,7 +14,12 @@ namespace TaskManagementUI
         {
           //Do nothing
         }
-        protected  void btnLogin_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Handles the Click event of the btnLogin control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void btnLogin_Click(object sender, EventArgs e)
         {
             var userAuthContext =  AuthenticateUserAsync(txtUserName.Text, Helper.GetHashString(txtPassword.Text));
             if (userAuthContext != null && !string.IsNullOrEmpty(userAuthContext.Token))
@@ -34,6 +33,12 @@ namespace TaskManagementUI
                 
             }
         }
+        /// <summary>
+        /// Authenticates the user asynchronous.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         private UserAuthContext AuthenticateUserAsync(string userName, string password)
         {
             var loginData = new { UserName = userName, Password = password };
