@@ -7,7 +7,7 @@ namespace TaskManagementAPI.Data.Dto
 {
     public class TaskCountDto
     {
-        public int UserId { get; set; }
+        public string FullName { get; set; }
         public int TaskCount { get; set; }
     }
 

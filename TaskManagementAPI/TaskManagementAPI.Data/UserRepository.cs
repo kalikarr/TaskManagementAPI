@@ -8,6 +8,9 @@ using TaskManagementAPI.Data.Dto;
 
 namespace TaskManagementAPI.Data
 {
+        /// <summary>
+    /// Get or save user data to database
+    /// </summary>
     public class UserRepository
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["TaskManagementDB"].ConnectionString;

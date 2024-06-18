@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Web;
 using System.Web.Security;
 using TaskManagementUI.Dto;
+using TaskManagementUI.Helpers;
 
 namespace TaskManagementUI.MasterPages
 {
@@ -20,6 +20,7 @@ namespace TaskManagementUI.MasterPages
             lblUserName.Text = userAuthContext.FullName; ;
             hdnUserId.Value = userAuthContext.UserId.ToString();
             hdnToken.Value = userAuthContext.Token;
+            hdnBaseUrl.Value = Helper.GetApiBaseUrl();
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)

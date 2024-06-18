@@ -30,7 +30,8 @@ namespace TaskManagementUI
             }
             else
             {
-                lblStatus.Text = "Login failed!";
+                DivLoginErrorMessage.Visible = true;
+                
             }
         }
         private UserAuthContext AuthenticateUserAsync(string userName, string password)

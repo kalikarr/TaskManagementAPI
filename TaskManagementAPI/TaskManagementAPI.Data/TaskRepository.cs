@@ -8,6 +8,9 @@ using TaskManagementAPI.Data.Dto;
 
 namespace TaskManagementAPI.Data
 {
+    /// <summary>
+    /// Get/Save Task data to Database
+    /// </summary>
     public class TaskRepository
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["TaskManagementDB"].ConnectionString;
@@ -74,7 +77,7 @@ namespace TaskManagementAPI.Data
             return task;
         }
     
-        public async Task AddTaskAsync(int userId, string taskName, string taskDescription, int createdById)
+        public async Task AddTaskAsync(int userId, string taskName, string taskDescription, int statusId, int createdById)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -85,6 +88,7 @@ namespace TaskManagementAPI.Data
                 cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.Parameters.AddWithValue("@TaskName", taskName);
                 cmd.Parameters.AddWithValue("@TaskDescription", taskDescription);
+                cmd.Parameters.AddWithValue("@StatusId", statusId);
                 cmd.Parameters.AddWithValue("@CreatedByUserId", createdById);
 
                 conn.Open();
@@ -144,7 +148,7 @@ namespace TaskManagementAPI.Data
                     {
                         tasksCount.Add(new TaskCountDto
                         {
-                            UserId = (int)reader["UserId"],
+                            FullName = reader["FullName"].ToString(),
                             TaskCount = (int)reader["TaskCount"]
                          
                         });

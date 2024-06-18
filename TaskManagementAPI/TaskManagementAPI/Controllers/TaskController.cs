@@ -15,6 +15,9 @@ using TaskManagementAPI.Models;
 using TaskManagementAPI.Filter;
 namespace TaskManagementAPI.Controllers
 {
+    /// <summary>
+    /// This is the controller of tasks action
+    /// </summary>
     [JwtAuthorize]
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -22,12 +25,19 @@ namespace TaskManagementAPI.Controllers
     public class TaskController : ApiController
     {
         private readonly TaskRepository _taskRepository;
-
+        /// <summary>
+        /// Constructor to instanciate task data
+        /// </summary>
         public TaskController()
         {
             _taskRepository = new TaskRepository();
         }
 
+        /// <summary>
+        /// Get the tasks list for the user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Task List</returns>
         [HttpGet, Route("{userId}")]
         public async Task<IHttpActionResult> GetTasks(int userId)
         {
@@ -47,7 +57,12 @@ namespace TaskManagementAPI.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Get Task details
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="taskId"></param>
+        /// <returns>Task</returns>
         [HttpGet, Route("{userId}/{taskId}")]
         public async Task<IHttpActionResult> GetTask(int userId, int taskId)
             {
@@ -69,7 +84,11 @@ namespace TaskManagementAPI.Controllers
                 return BadRequest("Unable to fetch the task");
             }
         }
-
+        /// <summary>
+        /// Save the task 
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPost, Route("createTask")]
         public async Task<IHttpActionResult> AddTask(TaskModel task)
         {
@@ -77,7 +96,7 @@ namespace TaskManagementAPI.Controllers
             {
                 task.ThrowIfNull("Task Model cannot be null");
 
-                await _taskRepository.AddTaskAsync(task.UserId, task.TaskName, task.TaskDescription, task.CreatedById);
+                await _taskRepository.AddTaskAsync(task.UserId, task.TaskName, task.TaskDescription,task.StatusId, task.CreatedById);
                 return Ok();
             }
             catch (Exception exc)
@@ -86,10 +105,14 @@ namespace TaskManagementAPI.Controllers
                 return BadRequest("Unable to create a task");
             }
         }
-
+        /// <summary>
+        /// Update the Tasks
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPut, Route("updateTask")]
         public async Task<IHttpActionResult> UpdateTask(TaskModel task)
-        {
+                {
             try
             {
                 task.ThrowIfNull("Task Model cannot be null");
@@ -102,7 +125,12 @@ namespace TaskManagementAPI.Controllers
                 return BadRequest("Unable to UpdateTask the tasksr");
             }
         }
-
+        /// <summary>
+        /// Delete the Tasks 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         [HttpDelete, Route("deleteTask/{userId}/{taskId}")]
         public async Task<IHttpActionResult> DeleteTask(int userId, int taskId)
         {
@@ -120,6 +148,10 @@ namespace TaskManagementAPI.Controllers
                 return BadRequest("Unable to delete the tasks");
             }
         }
+        /// <summary>
+        /// Get tasks count for each user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("getTaskCountByUser")]
         public async Task<IHttpActionResult> GetTaskCountByUser()
         {
@@ -137,6 +169,10 @@ namespace TaskManagementAPI.Controllers
             }
 
         }
+        /// <summary>
+        /// Get All the Task Status
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("getalltaskstatus")]
         public async Task<IHttpActionResult> GetallTaskStatus()
@@ -155,7 +191,11 @@ namespace TaskManagementAPI.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Expoet to excel
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet, Route("export/{userId}")]
         public async Task<HttpResponseMessage> Export(int userId)
         {
@@ -167,16 +207,20 @@ namespace TaskManagementAPI.Controllers
                 using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Tasks");
-                worksheet.Cells["A1"].Value = "Task ID";
+                worksheet.Cells["A1"].Value = "ID";
                 worksheet.Cells["B1"].Value = "Task Name";
-                worksheet.Cells["C1"].Value = "Task Description";
+                worksheet.Cells["C1"].Value = "Assign To";
+                    worksheet.Cells["D1"].Value = "Status";
+                    worksheet.Cells["E1"].Value = "Task Description";
 
                 var row = 2;
                 foreach (var task in tasks)
                 {
                     worksheet.Cells[row, 1].Value = task.TaskId;
                     worksheet.Cells[row, 2].Value = task.TaskName;
-                    worksheet.Cells[row, 3].Value = task.TaskDescription;
+                        worksheet.Cells[row, 3].Value = task.AssignTo;
+                        worksheet.Cells[row, 4].Value = task.StatusName;
+                        worksheet.Cells[row, 5].Value = task.TaskDescription;
                     row++;
                 }
 

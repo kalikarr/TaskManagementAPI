@@ -63,3 +63,9 @@
     .error-card .btn {
         margin-top: 1em;
     }
+.fa-file-excel {
+    color: #fff; /* Change color as needed */
+}
+.message-popup {
+    z-index: 1000; 
+}

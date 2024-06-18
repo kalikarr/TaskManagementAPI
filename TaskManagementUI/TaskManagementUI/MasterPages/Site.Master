@@ -9,55 +9,58 @@
     <asp:PlaceHolder runat="server">
         <%: Styles.Render("~/bundles/styles") %>
         <%: Scripts.Render("~/bundles/scripts") %>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <%--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>--%>
-  
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
     </asp:PlaceHolder>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
     <form d="form1" runat="server">
-       <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" runat="server" href="~/">Task Management System</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" runat="server" href="~/TaskManager.aspx">Home</a>
-                    </li>
-                </ul>
-                <div class="navbar-text ml-auto">
-                    <span class="mr-3 text-white">Welcome, <asp:Label ID="lblUserName" runat="server" />!</span>
-                    <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" CssClass="btn btn-outline-light" />
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" runat="server" href="~/">Task Management System</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/TaskManager.aspx">Home</a>
+                            </li>
+                        </ul>
+                        <div class="navbar-text ml-auto">
+                            <span class="mr-3 text-white">Welcome,
+                                <asp:Label ID="lblUserName" runat="server" />!</span>
+                            <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" CssClass="btn btn-outline-light" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </nav>
-</header>
-        <div class="container body-content">
-            <input type="hidden" id="hdnUserId" runat="server" />
-            <input type="hidden" id="hdnToken" runat="server" />
-
-            <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+            </nav>
+        </header>
+        <div class="container">
+            <div id="successMessage" class="alert alert-success alert-dismissible fade show message-popup position-fixed form-row container" role="alert" style="display: none;">
                 <strong>Success!</strong> <span id="successText"></span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <div id="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+            <div id="errorMessage" class="alert alert-danger alert-dismissible fade show message-popup position-fixed form-row container" role="alert" style="display: none;">
                 <strong>Error!</strong> <span id="errorText"></span>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        </div>
+        <div class="container body-content">
+            <input type="hidden" id="hdnUserId" runat="server" />
+            <input type="hidden" id="hdnToken" runat="server" />
+            <input type="hidden" id="hdnBaseUrl" runat="server" />
+
+
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
@@ -66,6 +69,5 @@
             </footer>
         </div>
     </form>
-
 </body>
 </html>
